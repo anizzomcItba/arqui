@@ -1,0 +1,35 @@
+--------------------------------------
+Compilacion
+--------------------------------------
+Para generar el ejecutable, primero es necesario generar los archivos objeto, 
+
+$> nasm -f elf hello.asm
+
+Luego, es necesario linkearlo, y resolver los valores no resueltos.
+
+$> ld hello.o -o hello
+
+El programa está listo para correr, y ya poseé los permisos necesarios.
+
+$> ./hello
+
+--------------------------------------
+Para entender un poco mejor:
+--------------------------------------
+BSS:
+La zona .bss sirve para resevar espacio. Cambie el valor 10 (10 bytes), de la 
+etiqueta placeholder por 2048 (2KB). (Recompile) Cuanto cambio el espacio 
+ocupado por el ejecutable?
+
+Mueva la etiqueta placeholder a la zona .data (Recompile). Cuanto cambio?
+
+SYSCALLS:
+Ejecute el programa con el programa strace, que intercepta y detecta las
+llamadas al systema operativo
+
+$> strace ./hello
+
+Puede notar las syscalls que se utilizaron? Cuales son?
+
+; Para ver otras syscalls, se puede entrar a la página:
+; http://docs.cs.up.ac.za/programming/asm/derick_tut/syscalls.html
