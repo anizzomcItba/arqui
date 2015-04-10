@@ -1,15 +1,7 @@
-; Para hacer uso de funciones, y reutlizar código, es necesario tener configura
-; stack. Ya que en el stack se guarda el recorrido que hacen las funciones
-; para saber a donde volver, cuando una funcion termina
-
 section .text
 GLOBAL _start
 
 _start:
-	mov esp, stack		; Se configura el stack, al final
-				; de este espacio, porque crece
-				; hacia atras
-
 	mov ecx, cadena 	; Puntero a la cadena
 	mov edx, longitud	; Largo de la cadena 
 	call print
@@ -40,5 +32,5 @@ cadena_2 db "Arquitectura de las Computadoras", 10
 cadena_2_len equ $-cadena_2
 
 section .bss
-	stackspace resb 128
-stack:
+	placeholder resb 128
+

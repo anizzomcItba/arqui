@@ -14,22 +14,65 @@ El programa está listo para correr, y ya poseé los permisos necesarios.
 $> ./hello
 
 --------------------------------------
-Para entender un poco mejor:
---------------------------------------
-BSS:
-La zona .bss sirve para resevar espacio. Cambie el valor 10 (10 bytes), de la 
-etiqueta placeholder por 2048 (2KB). (Recompile) Cuanto cambio el espacio 
-ocupado por el ejecutable?
+Acá se separó el programa principal de la las funciones de utilería,
 
-Mueva la etiqueta placeholder a la zona .data (Recompile). Cuanto cambio?
+Al declararse cómo EXTERN las funciones print y exit, en compilador,
+cuando genere el archivo objeto, va a dejar una tabla diciendo que
+dichos datos fantan definir. Cuando se linkedite con la biblioteca,
+estos se van a determinar, lo que va a permit llamar las funciones
+mensionadas.
 
-SYSCALLS:
-Ejecute el programa con el programa strace, que intercepta y detecta las
-llamadas al systema operativo
+Cuando se llama a una funcion, es buena práctica, dejar el estado
+del procesador cómo se recibió. Considere un caso, donde hay un ciclo
+que compara con el flag Z, que llama a una función, que lo altera.
 
-$> strace ./hello
+Ej:
+	...
+	dec ecx
+	call procesar	
+	jz fin
 
-Puede notar las syscalls que se utilizaron? Cuales son?
+fin:	
+	...
 
-; Para ver otras syscalls, se puede entrar a la página:
-; http://docs.cs.up.ac.za/programming/asm/derick_tut/syscalls.html
+Suponiendo que procesar es una función que recibe por ecx un 
+numero, (el del contador, que se espera que llegue a 0)
+y resulta que realiza operaciones que cambian el flag Z,
+un programador podría pasar inadverdido, y jamas terminar el ciclo,
+
+
+Etiquetas:
+
+Las etiquetas, luego se resuelven símbolos en el sistema. Al final
+de cuentas son números que representan direcciones de memoria. Es 
+una herramienta que los lenguajes emsabladores nos proporcionan para
+no tener que estar calculandas a mano.
+
+Pero resulta que cuando uno escribe una biblioteca, resulta que
+los nombres se empiezan a agotar. Por lo tanto, existe la posibilidad
+de crear etiquetas locales, que quedan en el scope, de la etiqueta general
+declarada anteriormente.
+
+Esto se hace con el punto por delante...
+
+funcion1:
+	
+.loop:
+	...
+	jmp .loop
+
+
+
+funcion2:
+
+.loop:
+	...
+	jmp .loop
+
+
+
+Las etiquetas loop, se llaman igual, ¿A donde salta el jmp?. Salta a la que
+corresponde por ser local.
+
+
+

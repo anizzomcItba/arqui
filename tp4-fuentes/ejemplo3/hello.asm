@@ -13,9 +13,7 @@ GLOBAL _start
 EXTERN print
 EXTERN exit
 
-_start:
-	mov esp, stack		; Configuro el Stack
-		
+_start:	
 	mov ebx, cadena 	; Puntero a la cadena 
 	call print
 	
@@ -32,5 +30,5 @@ section .data
 cadena db "Sacandole Jugo a Assembler", 10, 0
 
 section .bss
-	stackspace resb 128
-stack:
+	placeholder resb 128
+

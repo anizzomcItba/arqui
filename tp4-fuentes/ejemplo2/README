@@ -25,6 +25,16 @@ anterior. Cuando se ejecuta ret, se toma del stack la dirección (ó dato) que
 esté en ese lugar, para volver al punto de llamada anterior, y así "terminar"
 la función
 
+Linux reserva una buena cantidad de espacio para nuestros programas en el Stack.
+Se puede obtener dicha información ejecutando el comando
+
+$> ulimit -s
+
+En caso de que el stack se complete, nuestro programa aborta.
+
 El pasaje de parámetros y retorno de datos es simplemente una convención. Por un
 tema de simplicidad, podemos empezar a trabajar pasando parámetros por registros
 y retornando los datos en eax.
+
+
+
